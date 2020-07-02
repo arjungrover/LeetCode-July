@@ -1,0 +1,59 @@
+/*
+APPROACH 1 : Time complexity: O(n) ; Space complexity : O(1);
+
+we are using iterative approach but this will get exhaustive for bigger number
+
+APPROACH 2: 
+Assume that the answer is k, i.e. we've managed to complete k rows of coins. These completed rows contain in total : 1 + 2 + 3 +..+k = k(k+1)/2 coins;
+
+We could now reformulate the problem as follows:
+
+Find the maximum k such that : k(k+1)/2 <= N;
+
+we could use binary search as value of k will lie in [0,N];
+
+Time complexity: O(logn) ; Space complexity : O(1);
+
+APPROACH 3: This formula can be further simplified using completing the square technique.
+
+*/
+
+
+class Solution {
+    public int arrangeCoins(int n) {
+        /*
+        int count = 0;
+        for(int i=1;i<=n;i++){
+            n-=i;
+            count++;
+        }
+        return count;
+        */
+        
+        
+        long left = 0, right = n;
+        long k, curr;
+        
+        while (left <= right) {
+            
+        k = left + (right - left) / 2;
+        curr = k * (k + 1) / 2;        //long for managing big numbers
+
+        if (curr == n) return (int)k;
+
+        if (n < curr) {
+           
+          right = k - 1;
+        
+        } else {
+          
+          left = k + 1;
+       
+        }
+            
+    }
+        
+    return (int)right;  //loop will break only when right<left i.e just smaller than left.
+        
+    }
+}
