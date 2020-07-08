@@ -1,0 +1,29 @@
+/*
+So essentially, if we have a very large N, pattern on N%14 day would be the pattern on after N days.
+
+Pattern repeats after 14 days. (why???)
+
+In first day : we got first and last cell vacant. 6 cells in between got different possible permutation.
+
+*/
+
+class Solution {
+    public int[] prisonAfterNDays(int[] cells, int N) {
+        if(N>14)
+            N=N%14+14;  //for N which is divisible by 14; remainder will be zero
+        else
+            N%=14;
+       
+        for(int i=0;i<N;i++){
+            int[] temp = new int[8];
+            
+            for(int j=1;j<7;j++){
+                temp[j] = (cells[j-1]==cells[j+1])?1:0;
+            }
+            
+            cells = temp;
+        }
+        
+        return cells;
+    }
+}
