@@ -1,0 +1,83 @@
+/*
+Approach 1: we have used priority queue for finding smallest number among possible next number.
+
+Time complexity: O(nlogn)
+Space complexity: O(n)
+
+Approach 2:  using dynamic programming
+
+Time complexity: O(n)
+Space complexity: O(n)
+
+*/
+class Solution {
+    public int nthUglyNumber(int n) {
+        
+        /*
+        if(n==0 || n==1)
+            return n;
+        
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        HashSet<Long> hset = new HashSet<>();
+        
+        pq.add((long)2);
+        pq.add((long)3);
+        pq.add((long)5);
+        
+        int count = 1;
+        long val = 1;
+        
+        while(count++!=n){
+            
+            val = pq.remove();
+            // System.out.println(val);
+            if(!hset.contains(2*val)){
+                hset.add(2*val);
+                pq.add(2*val);
+            }
+            if(!hset.contains(3*val)){
+                hset.add(3*val);
+                pq.add(3*val);
+            }
+            if(!hset.contains(5*val)){
+                hset.add(5*val);
+                pq.add(5*val);
+            }
+           
+            
+        }
+        
+        return (int)val;
+        
+        */
+        
+        int[] dp = new int[n];
+        dp[0] = 1;
+        
+        //index value of 2, 3, 5 
+        int index2 = 0;
+        int index3 = 0;
+        int index5 = 0;
+        
+        for(int i=1;i<dp.length;i++){
+            dp[i] = Math.min( Math.min(dp[index2]*2, dp[index3]*3), dp[index5]*5);
+            
+            //3*2 = 6 ; 2*3=6 
+            //to avoid this , we will be increasing multiple values of indexes
+            //you can understand like 6 goes out, 6 contributed from 2 & 3 both goes out
+            
+            if(dp[i]==dp[index2]*2) index2++;
+            if(dp[i]==dp[index3]*3) index3++;
+            if(dp[i]==dp[index5]*5) index5++;
+                
+        }
+        
+        
+        return dp[n-1];
+        
+        
+        
+        
+        
+    }
+}
