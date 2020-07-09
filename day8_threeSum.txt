@@ -1,0 +1,74 @@
+/*
+Time complexity: O(n^2)
+Space complexity: O(1)
+
+Approach 2: we can use set for removing duplicacy.
+ 
+   public List<List<Integer>> threeSum(int[] nums) {
+        if (nums.length < 3) return new ArrayList<>(); // if nums less than 3 element
+        Arrays.sort(nums); // sort array
+        Set<List<Integer>> set = new HashSet<>();
+        for (int i = 0; i < nums.length - 2; i++) {
+            int j = i + 1;
+            int k = nums.length - 1;
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum == 0) set.add(Arrays.asList(nums[i], nums[j++], nums[k--]));
+                else if (sum > 0) k--;
+                else if (sum < 0) j++;
+            }
+
+        }
+
+        return new ArrayList<>(set);
+    }
+
+*/
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        
+        List<List<Integer>> res = new ArrayList<>();
+        
+        Arrays.sort(nums);
+        
+        //+ve + -ve = 0;  so, we are taking all negative numbers as first number 
+        //i<nums.length-2 => we need atleast 3 numbers
+        for(int i=0;i<nums.length-2 && nums[i]<=0; i++ ){
+            
+            if(i==0 || nums[i]!=nums[i-1]){
+                twosum(nums, i+1 , nums.length-1, nums[i], res);
+            }
+        }
+        
+        return res;
+        
+    }
+    private void twosum(int[] nums, int sp, int ep, int val, List<List<Integer>> res){
+        
+        int target = -val;
+        while(sp<ep){
+            
+            if(nums[sp]+nums[ep]==target){
+                
+                res.add(Arrays.asList(val, nums[sp], nums[ep]));
+                //for avoiding repetitions
+                while(sp<ep && nums[sp]==nums[sp+1]){
+                    sp++;
+                }
+                while(sp<ep && nums[ep]==nums[ep-1]){
+                    ep--;
+                }
+                sp++;
+                ep--;
+                
+            }else if(nums[sp]+nums[ep]<target){
+                sp++;
+            }else{
+                ep--;
+            }
+            
+            
+        }
+    }
+}
