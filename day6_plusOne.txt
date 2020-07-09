@@ -1,0 +1,31 @@
+class Solution {
+    public int[] plusOne(int[] digits) {
+        
+      int c = 1;
+      int[] res = new int[digits.length];
+        
+      for(int i=digits.length-1;i>=0;i--){
+          int sum = digits[i]+c;
+          
+          res[i] = sum%10;
+          c = sum/10;
+          
+      }
+        
+        if(c!=0){
+            int[] newArr = new int[digits.length+1];
+            
+            for(int i=digits.length-1;i>0;i--){
+                newArr[i+1] = res[i];
+            }
+            
+            newArr[0] = c;
+            
+            return newArr;
+        }
+        
+        
+        return res;
+        
+    }
+}
