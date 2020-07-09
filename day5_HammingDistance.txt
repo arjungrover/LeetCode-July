@@ -1,0 +1,37 @@
+/*
+XOR METHOD APPROACH :-
+we found xor of both number. if bits are different, then that place will get 1.
+
+when we and with number (xor-1) ; the rightmost bit shift leftwards giving us zero.
+basically we are neutralising ones by shifting them towards right.
+
+
+ int hammingDistance(int x, int y) {
+        int dist = 0, n = x ^ y;
+        while (n) {
+            ++dist;
+            n &= n - 1;
+        }
+        return dist;
+    }
+
+
+
+*/
+
+class Solution {
+    public int hammingDistance(int x, int y) {
+        int res = 0;
+        
+        for(int i=0;i<32;i++){
+            int mask = (1<<i);     //left shift 1000000 like that
+            
+            //corresponding bits are different
+            //1 & 1 = 1;  1 & 0 = 0
+            if( ( (x&mask)==0 && (y&mask)!=0) || ( (x&mask)!=0 && (y&mask)==0) )
+                res++;
+        }
+        
+        return res;
+    }
+}
