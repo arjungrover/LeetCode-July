@@ -1,0 +1,69 @@
+
+
+Approach 1 : Recursive Approach
+
+
+Approach 2: using Bit Manipulation
+
+*/
+
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+     /*
+        return dfs(nums, 0);
+    }
+    public List<List<Integer>> dfs(int[] nums, int idx){
+        
+        if(idx==nums.length){
+          List<List<Integer>> bres = new ArrayList<>();
+          bres.add(new ArrayList<>());
+          return bres;
+        }
+        
+        List<List<Integer>> res = new ArrayList<>();
+        
+        List<List<Integer>> ans = dfs(nums,idx+1);
+        
+        for(List<Integer> l: ans){
+            List<Integer> temp = new ArrayList<>();
+            temp.add(nums[idx]);
+            for(int e: l){
+                temp.add(e);
+            }
+            
+            res.add(temp);
+            res.add(l);
+        }
+        
+        return res;
+    }
+    */
+     //Approach2
+     
+     int n = nums.length;
+     int bitmask = (1<<n);      //left shift
+     
+     List<List<Integer>> res = new ArrayList<>();
+        
+     for(int i=0;i<(int)Math.pow(2,n);++i){
+         
+         int new_mask = (i|bitmask);
+         String bits_string = Integer.toBinaryString(new_mask).substring(1);  
+         //we need to discard 1 bit
+         
+         List<Integer> curr = new ArrayList<>();
+         for(int j=0;j<n;j++){
+             
+             if(bits_string.charAt(j)=='1')
+                 curr.add(nums[j]);
+             
+         }
+         
+         res.add(curr);
+     }
+        
+       return res; 
+        
+    }
+}
