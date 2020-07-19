@@ -1,0 +1,53 @@
+/*
+Integer.parseInt(str)
+Integer.toString(int)
+
+BRUTE FORCE -> convert n into binary . Reverse that binary. convert it into decimal.
+
+
+*/
+public class Solution {
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+//         System.out.println(n);
+        
+//         String revbinary = "";
+        
+//         while(n!=0){
+//             revbinary = revbinary + (n%2);
+//             n/=2;
+//         }
+//         System.out.println(revbinary);
+        
+//         int pow = revbinary.length()-1;
+//         int res = 0;
+//         for(int i=0;i<revbinary.length();i++){
+//             res+=( (revbinary.charAt(i)-'0')*Math.pow(2, pow) );
+//             pow--;
+//         }
+        
+//         return res;
+        
+        int res = 0;
+    
+        for(int i=0;i<32;i++){
+            int mask = 1<<i;
+            //check if that bit is on or off
+            if( (n&mask)!=0 )
+                res|=1;
+            else
+                res|=0;
+            
+            if(i==31)
+                break;
+            
+            res<<=1;   
+            //we are creating space for next bit ; similar we multiply and then add to form a number
+            
+            //we cant use multiply technique as first bit can be zero
+        }
+        
+        return res;
+        
+    }
+}
