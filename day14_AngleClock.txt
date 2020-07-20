@@ -1,0 +1,22 @@
+/*
+
+hr hand speed => .5 degree / min   (12 hr = 360 degree, 1 hr = 30 degree, 1 min = .5)
+min hand speed => 6 degees/min  (30 min = 180 degrees)
+1 hr => 30 degree
+
+
+*/
+
+
+class Solution {
+    public double angleClock(int hour, int minutes) {
+        
+        double hour_angle = hour*(30.0) + minutes*(0.5) ;  
+        //hour angle sweep + extra angle covered while minute hand is moving
+        double min_angle = minutes* (6.0);
+        
+        double diff = Math.abs(hour_angle-min_angle);
+        
+        return Math.min(diff, 360-diff);
+    }
+}
