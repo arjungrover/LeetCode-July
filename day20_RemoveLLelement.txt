@@ -1,0 +1,58 @@
+//APPROACH 1: Recursive Approach is used
+//APPROACH 2: Iterative Approach 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        /*
+        if(head==null)
+            return null;
+        
+        ListNode node = removeElements(head.next, val);
+        if(head.val==val){
+            head.next = null;
+            head = node;
+        }else{
+            head.next = node;
+        }
+        
+        return head;
+        
+        */
+        
+        //settle head
+        ListNode t1 = null;
+        ListNode t2 = head;
+        while(t2!=null && t2.val==val ){
+            t1 = t2;
+            t2 = t2.next;
+            
+            t1.next = null;
+        }
+        //update
+        head = t2;
+        t1 = null;
+        
+        while(t2!=null){
+            if(t2.val==val && t1!=null){
+                t1.next = t2.next;
+                t2 = t1.next;
+            }else{
+                t1 = t2;
+                t2 = t2.next;
+            }
+            
+        }
+        
+        return head;
+ 
+    }
+}
