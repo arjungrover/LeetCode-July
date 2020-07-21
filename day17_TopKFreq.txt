@@ -1,0 +1,91 @@
+/*
+
+Approach 1: Making a class with interface; implementing comapreTo function; making priorityQueue of that class object.
+class Solution {
+    
+     public class Pair implements Comparable<Pair> {
+        
+        int val;
+        int freq;
+        
+        Pair(int val, int freq){
+            this.val = val;
+            this.freq = freq;
+        }
+        
+        public int compareTo(Pair o){
+            return this.freq-o.freq;
+        }
+    }
+    
+    
+    // public class frequencyCompare implements Comparator<Pair>{
+    //     public int compareTo(Pair o){
+    //         return this.f - o.f;
+    //     }
+    // }
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> fmap = new HashMap<>();
+        for(int e:nums){
+            if(fmap.containsKey(e))
+                fmap.put(e,fmap.get(e)+1);
+            else
+                fmap.put(e,1);    
+        }
+        
+        PriorityQueue<Pair> pq = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for(int key: fmap.keySet())
+            pq.add(new Pair(key, fmap.get(key)));
+        
+        int[] res = new int[k];
+        int idx = 0;
+        
+        while(k>0){
+            
+            res[idx] = pq.remove().val;
+            idx++;
+            k--;
+        }
+        
+        return res;
+        
+    }
+}
+
+*/
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        if(k==nums.length)
+            return nums;
+        
+        //O(n)
+        HashMap<Integer,Integer> fmap = new HashMap<>();
+        for(int e:nums){
+            fmap.put(e,fmap.getOrDefault(e,0)+1);
+        }
+        
+        //init heap 'Less Frequent Element First'
+        Queue<Integer> heap = new PriorityQueue<>( (n1,n2)->fmap.get(n1)-fmap.get(n2) );
+        
+        //we will keep more frequent k elements only in our queue
+        for( int key:fmap.keySet() ){
+            heap.add(key);
+            
+            while(heap.size()>k)
+            {
+                heap.remove();
+            }
+        }
+        
+        int[] res = new int[k];
+        int idx = 0;
+        while(heap.size()>0){
+            res[idx]=heap.remove();
+            idx++;
+        }
+        return res;
+        
+    }
+}
