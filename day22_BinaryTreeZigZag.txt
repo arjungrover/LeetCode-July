@@ -1,0 +1,119 @@
+/*
+Approach 1 : BFS traversal using queue [ [list1],[list2],[list3] ]
+             Then reversed alternates list using two pointer approach.
+             
+Approach 2: using 2 stacks;
+            Time complexity: O(n)
+            Space complexity: O(n)+O(n)=O(n)
+
+*/
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        /*
+        if(root==null)
+            return new ArrayList<>();
+        
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while(queue.size()>0){
+            int size = queue.size();
+            List<Integer> temp = new ArrayList<>();
+            while(size-->0){
+                TreeNode node = queue.remove();
+                temp.add(node.val);
+                
+                if(node.left!=null)
+                    queue.add(node.left);
+                
+                if(node.right!=null)
+                    queue.add(node.right);
+            }
+            res.add(temp);
+        }
+        
+        for(int i=0;i<res.size();i++){
+            if(i%2!=0){
+               int left = 0;
+               int right = res.get(i).size()-1;
+               
+                while(left<right){
+                   int temp = res.get(i).get(left);
+                   res.get(i).set(left, res.get(i).get(right)) ;
+                   res.get(i).set(right, temp);
+                   
+                   left++;
+                   right--;
+               } 
+                
+            }
+        }
+        
+        return res;
+        
+        */
+        
+        if(root==null)
+            return new ArrayList<>();
+        
+        List<List<Integer>> res = new ArrayList<>();
+        Stack<TreeNode> stack1 = new Stack<>();
+        Stack<TreeNode> stack2 = new Stack<>();
+        
+        stack1.push(root);
+        boolean left_right=true;
+        
+        List<Integer> temp = new ArrayList<>();
+        
+        while(stack1.size()>0){
+            TreeNode node = stack1.pop();
+            temp.add(node.val);
+            
+            if(left_right){
+                
+                if(node.left!=null)
+                    stack2.push(node.left);
+                if(node.right!=null)
+                    stack2.push(node.right);
+                
+            }else{
+                
+                if(node.right!=null)
+                    stack2.push(node.right);
+                if(node.left!=null)
+                    stack2.push(node.left);
+            }
+            
+            if(stack1.size()==0){
+                stack1=stack2;
+                stack2 = new Stack<>();
+                
+                res.add(temp);
+                temp = new ArrayList<>();
+                
+                left_right = (left_right)?false:true;
+            }
+        }
+        
+        return res;
+        
+    }
+}
