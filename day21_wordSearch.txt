@@ -1,0 +1,55 @@
+
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        
+        char ch = word.charAt(0);
+        int r = board.length; 
+        int c = board[0].length;
+        boolean[][] visited = new boolean[r][c];
+        
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(board[i][j]==ch){
+                    boolean ans = dfs(board, visited, word.substring(1) ,i, j);
+                    if(ans)
+                     return ans;
+                }
+            }
+        }
+        
+        return false;
+        
+    }
+    public boolean dfs(char[][] board, boolean[][] visited, String word, int x,int y){
+        
+        if(word.length()==0)
+            return true;
+        
+        visited[x][y] = true;
+        char ch = word.charAt(0);
+        if(x+1<board.length && !visited[x+1][y] && board[x+1][y]==ch){
+            boolean ans = dfs(board,visited, word.substring(1), x+1, y);
+            if(ans)
+                return true;
+        }
+        if(y+1<board[0].length && !visited[x][y+1] && board[x][y+1]==ch){
+            boolean ans = dfs(board,visited, word.substring(1), x, y+1);
+            if(ans)
+                return true;
+        }
+        if(x-1>=0 && !visited[x-1][y] && board[x-1][y]==ch){
+            boolean ans = dfs(board,visited, word.substring(1), x-1, y);
+            if(ans)
+                return true;
+        }
+        if(y-1>=0 && !visited[x][y-1] && board[x][y-1]==ch){
+            boolean ans = dfs(board,visited, word.substring(1), x, y-1);
+            if(ans)
+                return true;
+        }
+        visited[x][y]=false;
+        
+        return false;
+        
+    }
+}
