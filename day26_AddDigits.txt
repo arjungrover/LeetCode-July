@@ -1,0 +1,36 @@
+/*
+we need to add digits untill we get single digit.
+we need to find one magic number which can give our single digit in 1 step.
+
+n=38 3+8=11 = 1+1 = 2
+38%k == 11%k == 2%k
+
+Lets say we got number n which can be expressed in terms of pow(10);
+Lets assume our magic number is k;   
+if we divide n%k = r (remainder) ; [ multiple of k +r = n ]
+if we divide sum of digits of n: sum(n)%k = r (remainder)  
+
+we need to find that magic number k;
+
+since both equation got r as remainder; we can subtract both terms in order to delete extra r and then divide it by our magic number k; it will give remainder zero.
+
+n=18102
+
+(10000+8000+100+2) - (1+8+1+0+2) = 9*10^3 + 9*10^2+.... = we can say it is completely divisible by 9.
+
+9 = [0-8] remainder possible 
+it covers everything.
+
+
+
+*/
+
+
+class Solution {
+    public int addDigits(int num) {
+        if(num==0)
+            return 0;
+        
+        return (num%9==0)?9:num%9;
+    }
+}
