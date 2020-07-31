@@ -1,0 +1,32 @@
+/*
+we are checking right side as if right side is sorted, the mid element must be the lowest in that part.
+we will be checking in left side.
+
+Exceptional case : [3,3,1,3]
+
+Time Complexity: O(N) in worst case. 
+
+*/
+
+class Solution {
+    public int findMin(int[] nums) {
+        int left = 0;
+        int right = nums.length-1;
+        int res = Integer.MAX_VALUE;
+        
+        while(left<=right){
+            int mid = (left+right)/2;
+            res = Math.min(res,nums[mid]);
+            
+            if(nums[mid]<nums[right])
+                right = mid-1;        //sorted
+            
+            else if(nums[mid]>nums[right])
+                left = mid + 1;         //not sorted
+            else
+                right--;              //equal
+        }
+        
+        return res;
+    }
+}
