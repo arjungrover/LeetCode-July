@@ -1,0 +1,70 @@
+/*
+[A, A, A, B,B, C] n=2
+
+output- number of idles + number of tasks
+
+fmap-> A-3, B-2, C-1
+
+A _ _ A _ _ A 
+
+so , we can have maximum no. of idles -> 4. [ (maxFreq-1)*n ]
+
+Now we will fill others and will decrease number of idles.
+
+A B C A B Idle A   -> output will be 7
+
+we will decrease idle spaces in the bunch .
+
+
+lets say an example:
+
+[A, A, A, A , A, A, B, C, D, E , F, G]
+
+A-6 , B-1, C-1, D-1, E-1 F-1 G-1  n=1  
+
+max_idles = (6-1)*1 => 5
+
+A _ A _ A _ A _ A _ A
+
+A B A C A D A E A F A G   
+
+
+A-2 B-2 C-1  n=3
+
+A B B C A [This is wrong and handled by this chunk code]
+
+//  max_idle_spaces-=Math.min(freq[i], freq[25]-1);   //we are reducing spaces in bunches
+            
+
+
+
+*/
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        if(tasks.length==0 || n==0)
+            return tasks.length;
+        
+        int[] freq = new int[26];
+        
+        for(char ch: tasks){
+            freq[ch-'A']++;
+        }
+        
+        Arrays.sort(freq);
+        
+        int max_idle_spaces = (freq[25]-1)*n;
+        
+        for(int i=24;i>=0;i--){
+            
+            // max_idle_spaces-= Math.min(max_idle_spaces,freq[i]);
+             max_idle_spaces-=Math.min(freq[i], freq[25]-1);   //we are reducing spaces in bunches
+            
+            // System.out.println(max_idle_spaces);
+        }
+        
+        //handling idle_spaces if become negative
+        max_idle_spaces = Math.max(0, max_idle_spaces);    //[a,a,a,a,a,a,b,c,d,e,f,g]
+        return tasks.length + max_idle_spaces;
+        
+    }
+}
